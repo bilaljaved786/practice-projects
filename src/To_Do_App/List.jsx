@@ -1,28 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../App.css";
 
-export default function List({ todos }) {
+export default function List(props) {
+
+ let inputTarget = useRef();
   return (
-    <div className="App">
-      <pre>{JSON.stringify(todos)}</pre>
-      <br />
-      {todos.map((todo) => (
-        <div>
-          <table style={{ border: "1px solid black" }}>
-            <tbody>
-              <tr key={todo.id}>
-                <td>{todo.task}</td>
-                <td>
-                  <button onClick={() => {alert(todo.id)}}>Delete</button>
-                </td>
-                <td>
-                  <button>Update</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <br />
-        </div>
+    <div style={{ marginLeft: "300px", marginTop: "80px" }}>
+      {props.todos.map((todo) => (
+        <table style={{ border: "1px solid black" }}>
+          <tbody>
+            <tr key={todo.id}>
+              <input text="text" ref={inputTarget} value={todo.task} onChange={(e) => {props.Update(todo.id, 'task', e.target.value);}}/>
+              <td><button onClick={() => {props.delete(todo.id);}}>Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
       ))}
     </div>
   );
